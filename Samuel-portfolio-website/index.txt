@@ -617,3 +617,5 @@ document.addEventListener('DOMContentLoaded', fetchBlogPosts);
 
 // Optional: Refresh blog posts every 10 minutes
 setInterval(fetchBlogPosts, 600000);
+
+api key=82f7766a76054433911ef9e143187b4e
