@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // API Calls for the blog page
-
 const API_KEY = '82f7766a76054433911ef9e143187b4e'; // Replace with your API key
 const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=${API_KEY}`;
 

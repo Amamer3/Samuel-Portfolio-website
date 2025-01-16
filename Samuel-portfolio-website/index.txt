@@ -569,3 +569,51 @@ Send Message
 //   });
 // });
 
+// API Calls for the blog page
+
+const API_KEY = '82f7766a76054433911ef9e143187b4e'; // Replace with your API key
+const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=${API_KEY}`;
+
+async function fetchBlogPosts() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+
+    const blogPostsList = document.getElementById('blog-posts-list');
+    const blogPostTemplate = document.getElementById('blog-post-template');
+
+    blogPostsList.innerHTML = ''; // Clear old content
+
+    if (data.articles && data.articles.length > 0) {
+      data.articles.forEach((article) => {
+        // Clone the template
+        const blogItem = blogPostTemplate.content.cloneNode(true);
+
+        // Populate the template with data
+        blogItem.querySelector('a').href = article.url;
+        blogItem.querySelector('img').src = article.urlToImage || './assets/images/placeholder.jpg';
+        blogItem.querySelector('img').alt = article.title;
+        blogItem.querySelector('.blog-category').textContent = article.source.name || 'General';
+        blogItem.querySelector('time').datetime = new Date(article.publishedAt).toISOString();
+        blogItem.querySelector('time').textContent = new Date(article.publishedAt).toLocaleDateString();
+        blogItem.querySelector('.h3.blog-item-title').textContent = article.title;
+        blogItem.querySelector('.blog-text').textContent = article.description || 'No description available.';
+
+        // Append to the list
+        blogPostsList.appendChild(blogItem);
+      });
+    } else {
+      blogPostsList.innerHTML = '<p>No blog posts found.</p>';
+    }
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    document.getElementById('blog-posts-list').innerHTML =
+      '<p>Failed to load blog posts. Please try again later.</p>';
+  }
+}
+
+// Fetch blog posts on page load
+document.addEventListener('DOMContentLoaded', fetchBlogPosts);
+
+// Optional: Refresh blog posts every 10 minutes
+setInterval(fetchBlogPosts, 600000);
