@@ -157,3 +157,33 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+// Portfolio Preview
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+  const closeModal = document.querySelector(".close-modal");
+
+  // Handle preview button click
+  document.querySelectorAll(".preview-btn").forEach((button) => {
+    button.addEventListener("click", function () {
+      const imageUrl = this.getAttribute("data-preview");
+      modalImg.src = imageUrl;
+      modal.style.display = "block";
+    });
+  });
+
+  // Handle close modal
+  closeModal.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // Close modal when clicking outside the image
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
+
